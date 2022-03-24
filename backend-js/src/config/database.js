@@ -1,5 +1,4 @@
-import path from 'path'
-import { Sequelize } from 'sequelize'
+const { Sequelize } = require('sequelize')
 
 function makeDialect (connect) {
   const possibleDialects = ['mysql', 'postgres', 'mariadb']
@@ -11,16 +10,15 @@ function makeDialect (connect) {
   return 'mysql'
 }
 
-const modelsPath = path.join(__dirname, '..', 'models')
+const database = new Sequelize(
+  process.env.DB_DATABASE,
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  {
+    dialect: makeDialect(process.env.DB_CONNETION),
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT)
+  }
+)
 
-const sequelize = new Sequelize({
-  database: process.env.DB_DATABASE,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  dialect: makeDialect(process.env.DB_CONNETION),
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  models: [modelsPath]
-})
-
-export default sequelize
+module.exports = database
