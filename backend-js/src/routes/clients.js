@@ -1,14 +1,22 @@
 const { Router } = require('express')
 
-const { parseJSON } = require('./index')
+const ClientController = require('../controllers/clientController')
+// const { parseJSON } = require('./_utils')
+const schemas = require('../schemas')
+// const getModel = require('../middlewares/getModel')
+// const Client = require('../database/models/client')
 
 const router = Router()
 
-router.get('/') // get all clients
-router.post('/', parseJSON) // create clients
-router.get('/:clientId') // get target users pets
-router.put('/:clientId', parseJSON) // update target client
-router.delete('/:clientId') // get target users
+// const getClientFromDB = getModel({ model: Client, resourceName: 'client', routeKey: 'clientId' })
+
+// console.log({ parseJSON: parseJSON.toString() })
+
+router.get('/', ClientController.list) // get all clients
+router.post('/', schemas.clientSchema, ClientController.create) // create clients
+router.get('/:clientId', ClientController.get) // get target users pets
+router.put('/:clientId', schemas.clientSchema, ClientController.update) // update target client
+router.delete('/:clientId', ClientController.remove) // get target users
 
 router.get('/:clientId/pets') // get target users pets
 router.post('/:clientId/pets') // create target client pets

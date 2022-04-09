@@ -2,11 +2,13 @@ const { Router } = require('express')
 
 const router = Router()
 
-router.get('/') // get all pets
-router.post('/') // create pets
-router.get('/:petId') // get target users pets
-router.put('/:petId') // update target pet
-router.delete('/:petId') // delete target users pet
+const PetController = require('../controllers/petController')
+
+router.get('/', PetController.list) // get all pets
+router.post('/', PetController.create) // create pets
+router.get('/:petId', PetController.get) // get target users pets
+router.put('/:petId', PetController.update) // update target pet
+router.delete('/:petId', PetController.remove) // delete target users pet
 
 router.get('/history/') // get target users pets
 router.post('/history/') // create target client pets

@@ -1,6 +1,6 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const CreateUserSchema = Joi.object().keys({
+const CreateUserSchema = Joi.object().keys({
   name: Joi
     .string()
     .required(),
@@ -21,7 +21,7 @@ export const CreateUserSchema = Joi.object().keys({
   password_confirm: Joi.ref('password')
 })
 
-export const UpdateUserSchema = Joi.object().keys({
+const UpdateUserSchema = Joi.object().keys({
   name: Joi
     .string()
     .required(),
@@ -35,3 +35,5 @@ export const UpdateUserSchema = Joi.object().keys({
     .required()
     .email()
 })
+
+module.exports = { CreateUserSchema, UpdateUserSchema }

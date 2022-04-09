@@ -1,18 +1,19 @@
-import { Router } from 'express'
-import { list, create, get, update, remove } from '../controllers/SpeciesController'
-import schemas from '../schemas'
+const { Router } = require('express')
+
+const schemas = require('../schemas')
+const SpeciesController = require('../controllers/speciesController')
 // import { getModel } from '../middlewares/getModel.js'
 
 const router = Router()
 
-router.get('/', list) // get all species
+router.get('/', SpeciesController.list) // get all species
 
-router.post('/', schemas.speciesSchema, create) // create species
+router.post('/', schemas.speciesSchema, SpeciesController.create) // create species
 
-router.get('/:speciesId', get) // get target species
+router.get('/:speciesId', SpeciesController.get) // get target species
 
-router.put('/:speciesId', schemas.speciesSchema, update) // get target species
+router.put('/:speciesId', schemas.speciesSchema, SpeciesController.update) // get target species
 
-router.delete('/:speciesId', remove) // get target species
+router.delete('/:speciesId', SpeciesController.remove) // get target species
 
 module.exports = router

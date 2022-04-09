@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt')
-const UserModel = require('../models/user')
+const UserModel = require('../database/models/user')
 const { GenericCrudController } = require('./GenericCrudController')
 
 const SALT_ROUNDS = 10

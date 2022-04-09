@@ -1,6 +1,6 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const LoginSchema = Joi.object().keys({
+const LoginSchema = Joi.object().keys({
   password: Joi
     .string()
     .required(),
@@ -9,3 +9,5 @@ export const LoginSchema = Joi.object().keys({
     .string()
     .required()
 })
+
+module.exports = { LoginSchema }

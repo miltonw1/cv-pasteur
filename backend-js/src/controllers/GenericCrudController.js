@@ -1,87 +1,69 @@
-class GenericCrudController {
-  constructor (model, routeKey) {
-    this.model = model
+const error = require('../utils/errors').commonExpressError
 
-    this.routeKey = routeKey
-  }
+function genericController (Model, routeKey) {
+  return {
+    list (_, res) {
+      Model.findAll()
+        .then(res.json)
+        .catch((err) => {
+          console.error(err)
+          res.send(err)
+        })
+    },
 
-  createDataMapper (req) {
-    return req.body
-  }
+    get (req, res) {
+      const id = Number(req.params[routeKey])
 
-  updateDataMapper (req) {
-    return req.body
-  }
+      Model.findByPk(id)
+        .then((element) => {
+          if (!element) {
+            return res.status(404).send({ message: 'Not found' })
+          }
 
-  list (_, res) {
-    this.model.findAll()
-      .then(res.json)
-      .catch((err) => {
-        return res.status(500).send(err)
-      })
-  }
+          res.json(element)
+        })
+        .catch(error(res))
+    },
 
-  async get (req, res) {
-    const id = Number(req.params[this.routeKey])
+    create (req, res) {
+      Model.create(req.body)
+        .then(res.status(201).json)
+        .catch(error(res))
+    },
 
-    try {
-      const element = await this.model.findByPk(id)
+    update (req, res) {
+      const id = Number(req.params[routeKey])
 
-      return res.json(element)
-    } catch (error) {
-      return res.status(500).send(error)
-    }
-  }
+      Model.findByPk(id)
+        .then((element) => {
+          if (!element) {
+            return res.status(404).send({ message: 'Not found' })
+          }
+          element.set(req.body)
 
-  async create (req, res) {
-    const data = this.createDataMapper(req)
+          element.save()
 
-    try {
-      const element = await this.model.create(data)
+          res.json(element)
+        })
+        .catch(error(res))
+    },
 
-      return res
-        .status(201)
-        .json(element)
-    } catch (error) {
-      return res.status(500).send(error)
-    }
-  }
+    remove (req, res) {
+      const id = Number(req.params[routeKey])
 
-  async update (req, res) {
-    const id = Number(req.params[this.routeKey])
+      Model.findByPk(id)
+        .then((element) => {
+          if (!element) {
+            return res.status(404).send({ message: 'Not found' })
+          }
 
-    const data = this.updateDataMapper(req)
+          element.destroy()
 
-    try {
-      const element = await this.model.findByPk(id)
-
-      element.set(data)
-
-      element.save()
-
-      return res
-        .status(202)
-        .json(element)
-    } catch (error) {
-      return res.status(500).send(error)
-    }
-  }
-
-  async remove (req, res) {
-    const id = Number(req.params[this.routeKey])
-
-    try {
-      const element = await this.model.findByPk(id)
-
-      element.remove()
-
-      return res
-        .status(204)
-        .json(element)
-    } catch (error) {
-      return res.status(500).send(error)
+          return res.status(204).json(element)
+        })
+        .catch(error(res))
     }
   }
 }
 
-module.exports = { GenericCrudController }
+module.exports = genericController

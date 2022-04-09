@@ -1,6 +1,6 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const RaceSchema = Joi.object().keys({
+const RaceSchema = Joi.object().keys({
   name: Joi
     .string()
     .required(),
@@ -9,3 +9,5 @@ export const RaceSchema = Joi.object().keys({
     .number()
     .required()
 })
+
+module.exports = { RaceSchema }

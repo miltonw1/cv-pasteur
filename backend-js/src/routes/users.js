@@ -1,6 +1,7 @@
 const { Router } = require('express')
 
 const router = Router()
+// const UserController = require('../controllers/userController')
 
 router.get('/') // get all users
 router.post('/') // create user

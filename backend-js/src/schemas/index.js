@@ -1,9 +1,9 @@
-import { LoginSchema } from './loginSchema'
-import { RaceSchema } from './raceSchema'
-import { SpeciesSchema } from './speciesSchema'
-import { ClientSchema } from './clientSchema'
-import { PetSchema } from './petSchema'
-import { CreateUserSchema, UpdateUserSchema } from './userSchema'
+const { LoginSchema } = require('./loginSchema')
+const { RaceSchema } = require('./raceSchema')
+const { SpeciesSchema } = require('./speciesSchema')
+const { ClientSchema } = require('./clientSchema')
+const { PetSchema } = require('./petSchema')
+const { CreateUserSchema, UpdateUserSchema } = require('./userSchema')
 
 function makeMiddleware (schema) {
   return (req, res, next) => {
@@ -20,7 +20,7 @@ function makeMiddleware (schema) {
   }
 }
 
-export default {
+module.exports = {
   login: makeMiddleware(LoginSchema),
   createUser: makeMiddleware(CreateUserSchema),
   updateUser: makeMiddleware(UpdateUserSchema),

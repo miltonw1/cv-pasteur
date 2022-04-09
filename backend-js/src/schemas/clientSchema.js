@@ -1,6 +1,6 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const ClientSchema = Joi.object().keys({
+const ClientSchema = Joi.object().keys({
   name: Joi
     .string()
     .required(),
@@ -24,3 +24,5 @@ export const ClientSchema = Joi.object().keys({
 
   debt: Joi.string()
 })
+
+module.exports = { ClientSchema }

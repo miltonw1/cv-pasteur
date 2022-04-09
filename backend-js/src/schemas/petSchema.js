@@ -1,6 +1,6 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const PetSchema = Joi.object().keys({
+const PetSchema = Joi.object().keys({
   name: Joi
     .string()
     .required(),
@@ -43,3 +43,5 @@ export const PetSchema = Joi.object().keys({
   race_id: Joi
     .number()
 })
+
+module.exports = { PetSchema }

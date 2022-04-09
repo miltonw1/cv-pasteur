@@ -51,6 +51,39 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+
+    queryInterface.addConstraint('Pets', {
+      fields: ['race_id'],
+      type: 'foreign key',
+      references: {
+        table: 'Races',
+        field: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    })
+
+    queryInterface.addConstraint('Pets', {
+      fields: ['species_id'],
+      type: 'foreign key',
+      references: {
+        table: 'Species',
+        field: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    })
+
+    queryInterface.addConstraint('Pets', {
+      fields: ['client_id'],
+      type: 'foreign key',
+      references: {
+        table: 'Clients',
+        field: 'id'
+      },
+      onDelete: 'cascade',
+      onUpdate: 'cascade'
+    })
   },
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('Pets')

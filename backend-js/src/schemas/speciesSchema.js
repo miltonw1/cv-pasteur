@@ -1,7 +1,9 @@
-import Joi from 'joi'
+const Joi = require('joi')
 
-export const SpeciesSchema = Joi.object().keys({
+const SpeciesSchema = Joi.object().keys({
   name: Joi
     .string()
     .required()
 })
+
+module.exports = { SpeciesSchema }
